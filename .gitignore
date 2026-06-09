@@ -5,3 +5,8 @@
 *.pdf
 *.gz
 *.toc
+~$言期末课程论文模板.doc
+*.fls
+*.fdb_latexmk
+*.blg
+*.xdv

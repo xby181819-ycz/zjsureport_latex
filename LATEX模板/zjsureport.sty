@@ -1,4 +1,4 @@
-\ProvidesPackage{zjureport}
+\ProvidesPackage{zjsureport}
 
 \RequirePackage[
   left=3.17cm,
@@ -21,9 +21,14 @@
 \RequirePackage{listings}
 \RequirePackage{booktabs}
 \RequirePackage{etoolbox}
+\RequirePackage{indentfirst}
+\RequirePackage{caption}
+\RequirePackage{enumitem}
+\RequirePackage[titletoc,title]{appendix}
 
 \hypersetup{hidelinks}
 \setmainfont{Times New Roman}
+\setsansfont{Arial}
 \setCJKmainfont[AutoFakeBold=2]{SimSun}
 \setCJKsansfont[AutoFakeBold=2]{SimHei}
 \setCJKmonofont[AutoFakeSlant=.2]{FangSong}
@@ -89,7 +94,7 @@
   \renewcommand{\headrule}{%
     \vspace{0.4cm}%
     {\color{black}\hrule width\headwidth height\headrulewidth}%
-  }
+  }%
   \makeatother%
   \renewcommand{\footrulewidth}{0pt}%
 }
@@ -128,18 +133,28 @@
 \makeatletter
 \renewcommand{\maketitle}{%
   \thispagestyle{fancy}%
-  \begin{center}
-    \vspace*{0cm}
-    {\heiti\fontsize{16pt}{24pt}\selectfont 题目\par}
-  \end{center}
-  \vspace{0.4cm}
+  \begin{center}%
+    {\zihao{3}\bfseries\heiti 题目\par}%
+  \end{center}%
+  \vspace{0.6cm}%
 }
 \renewenvironment{abstract}{%
-  {\songti\zihao{-4}\noindent 摘要：}%
-}{\par}
+  \if@twocolumn
+    \section*{\abstractname}%
+  \else
+    \begin{center}%
+      {\zihao{3}\bfseries\heiti \abstractname\par}%
+    \end{center}%
+    \vspace{0.4cm}%
+    \noindent\songti\zihao{-4}%
+  \fi
+}{%
+  \par
+}
+\renewcommand\abstractname{摘要}
 \newcommand{\keywords}[1]{%
-  \vspace{2.1cm}\par
-  {\songti\zihao{-4}\noindent 关键词：#1\par}
+  \par\vspace{1ex}%
+  {\noindent\songti\zihao{-4}\textbf{关键词：}#1\par}%
 }
 \makeatother
 
