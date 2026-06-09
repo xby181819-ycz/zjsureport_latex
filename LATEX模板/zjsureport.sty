@@ -1,0 +1,168 @@
+\ProvidesPackage{zjureport}
+
+\RequirePackage[
+  left=3.17cm,
+  right=3.17cm,
+  top=2.54cm,
+  bottom=2.54cm,
+  headheight=44pt,
+  headsep=18pt,
+  includehead,
+  includefoot
+]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{fontspec}
+\RequirePackage{setspace}
+\RequirePackage{hyperref}
+\RequirePackage{xcolor}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{tocloft}
+\RequirePackage{listings}
+\RequirePackage{booktabs}
+\RequirePackage{etoolbox}
+
+\hypersetup{hidelinks}
+\setmainfont{Times New Roman}
+\setCJKmainfont[AutoFakeBold=2]{SimSun}
+\setCJKsansfont[AutoFakeBold=2]{SimHei}
+\setCJKmonofont[AutoFakeSlant=.2]{FangSong}
+\newfontfamily\tnr{Times New Roman}
+\setstretch{1.25}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+
+\newcommand{\reportcourse}{R语言}
+\newcommand{\reporttitlecn}{《R 语言》课程论文}
+\newcommand{\reporttopic}{基于集成学习算法的银行精准营销案例分析}
+\newcommand{\reportcollege}{统计与数据科学学院}
+\newcommand{\reportmajor}{数学2401}
+\newcommand{\reportid}{}
+\newcommand{\reportauthor}{}
+\newcommand{\reportscore}{}
+\newcommand{\reportmonth}{2026 年 6 月}
+
+\renewcommand{\contentsname}{目\quad 录}
+\renewcommand{\thesection}{第\chinese{section}章}
+\renewcommand{\thesubsection}{\chinese{subsection}、}
+\renewcommand{\thesubsubsection}{（\chinese{subsubsection}）}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\titleformat{\section}{\centering\bfseries\zihao{2}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.3em}{0.9em}
+\titleformat{\subsection}{\bfseries\zihao{3}}{\thesubsection}{0.4em}{}
+\titlespacing*{\subsection}{0pt}{0.9em}{0.5em}
+\titleformat{\subsubsection}{\bfseries\zihao{4}}{\thesubsubsection}{0.4em}{}
+\titlespacing*{\subsubsection}{0pt}{0.8em}{0.3em}
+
+\renewcommand{\cfttoctitlefont}{\hfill\bfseries\zihao{2}}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\setlength{\cftbeforesecskip}{0.25em}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\lstset{
+  language=R,
+  basicstyle=\ttfamily\small,
+  columns=fullflexible,
+  keepspaces=true,
+  breaklines=true,
+  frame=none
+}
+
+\setlength{\headsep}{0.8cm}
+\setlength{\footskip}{1.75cm}
+
+\newcommand{\applypagestyle}{%
+  \fancyhf{}%
+  \fancyhead[L]{%
+    \hspace*{-0.25cm}%
+    \raisebox{0cm}{\includegraphics[height=1.27cm]{figures/zjgsu_badge.png}}%
+    \hspace{0.32cm}%
+    \raisebox{0cm}{\includegraphics[width=4.75cm,height=1.38cm]{figures/zjgsu_header_wordmark.png}}%
+  }%
+  \fancyhead[R]{\songti\fontsize{9pt}{11.25pt}\selectfont 课程论文：\reportcourse}%
+  \fancyfoot[C]{\tnr\fontsize{9pt}{11.25pt}\selectfont - \thepage\ -}%
+  \makeatletter
+  \renewcommand{\headrule}{%
+    \vspace{0.4cm}%
+    {\color{black}\hrule width\headwidth height\headrulewidth}%
+  }
+  \makeatother%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+\pagestyle{fancy}
+\applypagestyle
+\fancypagestyle{plain}{\applypagestyle}
+
+\newcommand{\coverfield}[2]{\zihao{-2}\bfseries #1 & \zihao{-2}#2\\[0.72em]}
+
+\newcommand{\cover}{%
+  \thispagestyle{fancy}%
+  \begin{center}
+    \vspace*{0.15cm}
+    \includegraphics[width=0.84\textwidth]{figures/zjgsu_cover_wordmark.png}\par
+    \vspace{1.0cm}
+    {\bfseries\zihao{1}\reporttitlecn\par}
+    \vspace{0.9cm}
+    \includegraphics[width=0.20\textwidth]{figures/zjgsu_badge.png}\par
+    \vspace{1.0cm}
+    {\bfseries\zihao{3}题目：\reporttopic\par}
+    \vspace{1.3cm}
+    \begin{tabular}{rl}
+      \coverfield{学\hspace{2em}院：}{\reportcollege}
+      \coverfield{专\hspace{2em}业：}{\reportmajor}
+      \coverfield{学\hspace{2em}号：}{\reportid}
+      \coverfield{学生姓名：}{\reportauthor}
+      \coverfield{成\hspace{2em}绩：}{\reportscore}
+    \end{tabular}
+    \vfill
+    {\bfseries\zihao{3}\reportmonth\par}
+  \end{center}
+  \clearpage
+}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \thispagestyle{fancy}%
+  \begin{center}
+    \vspace*{0cm}
+    {\heiti\fontsize{16pt}{24pt}\selectfont 题目\par}
+  \end{center}
+  \vspace{0.4cm}
+}
+\renewenvironment{abstract}{%
+  {\songti\zihao{-4}\noindent 摘要：}%
+}{\par}
+\newcommand{\keywords}[1]{%
+  \vspace{2.1cm}\par
+  {\songti\zihao{-4}\noindent 关键词：#1\par}
+}
+\makeatother
+
+\newcommand{\reference}{%
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{section}{参考文献}
+  \bibliographystyle{gbt7714-numerical}
+  \bibliography{reference}
+}
+
+\makeatletter
+\citestyle{numbers}
+\setcitestyle{numbers,square,comma,sort&compress}
+\renewcommand\NAT@open{[}
+\renewcommand\NAT@close{]}
+\renewcommand\NAT@sep{,}
+\def\@biblabel#1{[#1]}
+\pretocmd{\thebibliography}{%
+  \sloppy
+  \clubpenalty4000
+  \widowpenalty4000
+  \sfcode`\.=\@m
+  \setlength{\itemsep}{0.25\baselineskip}
+}{}{}
+\makeatother

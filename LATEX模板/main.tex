@@ -1,0 +1,134 @@
+%!TeX program = xelatex
+\documentclass[12pt,a4paper,UTF8]{ctexart}
+\usepackage{gbt7714}
+\usepackage{zjsureport}
+
+\begin{document}
+
+\cover
+\maketitle
+\begin{abstract}
+
+\end{abstract}
+\keywords{}
+
+\clearpage
+\tableofcontents
+
+\clearpage
+\section{引言}
+
+\subsection{研究背景}
+此处填写研究背景。\cite{gu2020xgboost}
+
+\subsection{研究意义}
+此处填写研究意义。
+
+\section{数据准备}
+
+\subsection{数据描述}
+此处填写数据描述。
+
+\subsection{数据预处理}
+
+\subsubsection{剔除无关变量}
+此处填写剔除无关变量的说明。
+
+\subsubsection{缺失值检查}
+此处填写缺失值检查的说明。
+
+\subsubsection{重复值检查}
+此处填写重复值检查的说明。
+
+\subsubsection{异常值检查}
+此处填写异常值检查的说明。
+
+\subsection{描述性统计}
+
+\subsubsection{连续变量数据情况}
+此处填写连续变量统计说明。
+
+\subsubsection{分类变量数据情况}
+此处填写分类变量统计说明。
+
+\section{特征提取}
+
+\subsection{One-Hot编码}
+此处填写 One-Hot 编码说明。
+
+\subsection{数据归一化}
+此处填写数据归一化说明。
+
+\section{模型的构建}
+
+\subsection{模型选择}
+此处填写模型选择说明。
+
+\subsection{模型评价}
+此处填写模型评价说明。
+
+\section{总结}
+此处填写总结内容。
+
+\reference
+
+\clearpage
+\section*{附录}
+\addcontentsline{toc}{section}{附录}
+\begin{lstlisting}
+#####导入数据#####
+value <- read.table(file = file.choose(), header = TRUE, sep = ",")
+data <- value
+
+#####数据预处理#####
+#####1、删除没用的列变量#####
+data1 <- data[, -c(14:17)]
+
+#####2、查看数据中是否有缺失值#####
+list <- list()
+length(list) = 14
+for (i in 1:14) { list[[i]] = table(is.na(data1[, i])) }
+unlist(list)
+
+#####3、查看数据中是否有重复值#####
+table(duplicated(data1$ID))
+
+#####4、查看数据中是否存在异常值#####
+par(mfcol = c(2, 3))
+par(mai = c(0, 0.5, 0.5, 0))
+par(oma = c(3, 0, 2, 2))
+boxplot(data1$age)
+mtext("age", side = 1, line = 1, outer = FALSE)
+boxplot(data1$duration)
+mtext("duration", side = 1, line = 1, outer = FALSE)
+boxplot(data1$campaign)
+mtext("campaign", side = 1, line = 1, outer = FALSE)
+boxplot(data1$previous)
+mtext("previous", side = 1, line = 1, outer = FALSE)
+boxplot(data1$balance)
+mtext("balance", side = 1, line = 1, outer = FALSE)
+mtext("异常值检查", side = 3, line = -2, outer = TRUE, cex = 1.5)
+
+#####描述性统计#####
+#####1、连续变量描述性统计#####
+list <- list()
+length(list) = 5
+lianxu <- cbind(data1$age, data1$duration, data1$campaign, data1$previous, data1$balance)
+for (i in 1:5) {
+  list[[i]] = fivenum(lianxu[, i])
+}
+mean <- numeric(5)
+for (i in 1:5) { mean[i] = mean(lianxu[, i]) }
+
+#####2、分类变量描述性统计#####
+par(mfcol = c(3, 2))
+par(mai = c(0.5, 0.5, 0.2, 0))
+par(oma = c(2, 0, 3, 2))
+tu1 <- table(as.vector(data1$marital)[c(which(data1$y == "n"))])
+tu2 <- table(as.vector(data1$marital)[c(which(data1$y == "y"))])
+tu <- cbind(as.data.frame(tu1), Freq2 = as.data.frame(tu2)[, 2])[, 2:3]
+rownames(tu) <- c(as.character(as.data.frame(tu1)[, 1]))
+barplot(as.matrix(t(tu)), beside = TRUE)
+\end{lstlisting}
+
+\end{document}
